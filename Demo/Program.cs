@@ -2,6 +2,21 @@
 
 namespace Demo
 {
+    public class Person
+    {
+        public int PersonId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Instructor : Person
+    {
+        public string Specialization { get; set; }
+    }
+
+    public class Trainee : Person
+    {
+        public int Grade { get; set; }
+    }
     internal class Program
     {
         static void Main(string[] args)
@@ -66,9 +81,12 @@ namespace Demo
                         Console.WriteLine($"{r.Department}");
                     }
 
-        }
+                      
+
 
     }
+
+}
 
 
     }

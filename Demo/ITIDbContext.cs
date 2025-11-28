@@ -1,4 +1,5 @@
 ﻿using Assignment.Models;
+using Demo;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,15 @@ namespace Assignment
         {
             optionsBuilder.UseSqlServer("Server=.;Database=ITI_DB;Trusted_Connection=True;TrustServerCertificate=True;");
         }
+      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Inheritance mapping TPC
+            modelBuilder.Entity<Person>().UseTpcMappingStrategy();
+
+            modelBuilder.Entity<Person>().ToTable("People");
+            modelBuilder.Entity<Trainee>().ToTable("Trainees");
             // Configure Stud_Course (Many-to-Many with payload)
             modelBuilder.Entity<Stud_Course>()
                 .HasKey(sc => new { sc.stud_ID, sc.Course_ID });
