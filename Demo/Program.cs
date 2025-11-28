@@ -1,10 +1,58 @@
-﻿namespace Demo
+﻿using Assignment;
+
+namespace Demo
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+
+            // group join example
+            using var context = new ITIContext();
+            
+                var result =
+                    context.Departments
+                    .GroupJoin(
+                        context.Instructors,
+                        dept => dept.ID,
+                        inst => inst.ID,
+                        (dept, instGroup) => new
+                        {
+                            Department = dept.Name,
+                            Instructors = instGroup.Select(i => i.Name)
+                        });
+
+                foreach (var item in result)
+                {
+                    Console.WriteLine($"Department: {item.Department}");
+                    foreach (var inst in item.Instructors)
+                        Console.WriteLine($"  - {inst}");
+                }
+
+            var result2 =
+                    context.Departments
+                    .GroupJoin(
+                        context.Courses,
+                        d => d.ID,
+                        c => c.ID,
+                        (d, cs) => new
+                        {
+                            Department = d.Name,
+                            Courses = cs.Select(c => c.Name)
+                        });
+
+                foreach (var item in result2)
+                {
+                    Console.WriteLine($"Department: {item.Department}");
+                    foreach (var c in item.Department)
+                        Console.WriteLine($"   - {c}");
+                }
+
+
+                
+            }
+
         }
+
+
     }
-}
