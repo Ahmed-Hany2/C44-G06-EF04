@@ -48,11 +48,27 @@ namespace Demo
                         Console.WriteLine($"   - {c}");
                 }
 
+            // Left Join example
+            var result3 =
+               from d in context.Departments
+               join i in context.Instructors
+               on d.ID equals i.ID
+               into gi
+               from inst in gi.DefaultIfEmpty()
+               select new
+               {
+                   Department = d.Name,
+                   Instructor = inst != null ? inst.Name : "No Instructor"
+               };
 
-                
-            }
+                    foreach (var r in result3)
+                    {
+                        Console.WriteLine($"{r.Department}");
+                    }
 
         }
+
+    }
 
 
     }
