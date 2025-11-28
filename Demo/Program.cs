@@ -1,4 +1,5 @@
 ﻿using Assignment;
+using Assignment.Models;
 
 namespace Demo
 {
@@ -103,7 +104,30 @@ namespace Demo
                 Console.WriteLine($"{p.PersonId} - {p.Name} - {p.GetType().Name}");
             }
 
+            // Queries on Inherited mapping
 
+            var personInfo = context.Instructors
+    .Select(p => new
+    {
+        p.Name,
+        Type = p is Student ? "Student" : "Instructor",
+        Extra = p is Student ?
+            ((Student)p).Grade.ToString() :
+            ((Instructor)p).Salary.ToString()
+    })
+    .ToList();
+
+            foreach (var p in personInfo)
+            {
+                Console.WriteLine($"{p.Name} - {p.Type} - {p.Extra}");
+            }
+
+            var onlyStudents = context.Instructors.OfType<Student>().ToList();
+
+            foreach (var s in onlyStudents)
+            {
+                Console.WriteLine($"{s.FName} - {s.Equals}");
+            }
         }
 
 }
