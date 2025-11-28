@@ -40,6 +40,10 @@ namespace Assignment
             .HasValue<Person>("Person")
             .HasValue<Trainee>("Trainee");
 
+            // Inheritance Mapping TPT
+            modelBuilder.Entity<Person>().ToTable("People");
+            modelBuilder.Entity<Trainee>().ToTable("Trainees");
+
             // Configure Stud_Course (Many-to-Many with payload)
             modelBuilder.Entity<Stud_Course>()
                 .HasKey(sc => new { sc.stud_ID, sc.Course_ID });

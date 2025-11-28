@@ -81,10 +81,30 @@ namespace Demo
                         Console.WriteLine($"{r.Department}");
                     }
 
-                      
+            //Inheritance mapping
+            context.Add(new Instructor
+            {
+                Name = "Ahmed",
+                 Specialization = "C#"
+            });
+
+            context.Add(new Trainee
+            {
+                Name = "Mohamed",
+                Grade = 95
+            });
+
+            context.SaveChanges();
+
+            var people = context.Set<Person>().ToList();
+
+            foreach (var p in people)
+            {
+                Console.WriteLine($"{p.PersonId} - {p.Name} - {p.GetType().Name}");
+            }
 
 
-    }
+        }
 
 }
 
