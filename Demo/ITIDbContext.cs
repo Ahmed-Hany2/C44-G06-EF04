@@ -33,6 +33,13 @@ namespace Assignment
 
             modelBuilder.Entity<Person>().ToTable("People");
             modelBuilder.Entity<Trainee>().ToTable("Trainees");
+
+            // Inheritance mapping TPH
+            modelBuilder.Entity<Person>()
+            .HasDiscriminator<string>("PersonType")
+            .HasValue<Person>("Person")
+            .HasValue<Trainee>("Trainee");
+
             // Configure Stud_Course (Many-to-Many with payload)
             modelBuilder.Entity<Stud_Course>()
                 .HasKey(sc => new { sc.stud_ID, sc.Course_ID });
